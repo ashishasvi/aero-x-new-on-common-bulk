@@ -134,31 +134,11 @@ def process_excel(input_file_path, output_file_path):
         ("Stefan.Shemaitis@setnaio.com", "29663"),
         ("paul@setnaio.com", "29665"),
         ("aybars@setnaio.com", "30297"),
-        ("Scott.Loza@setnaio.com", "29664"),
-        ("paul@setnaio.com", ""),
+        
+        ("paul@setnaio.com", "")
     ]
 
     txt_files = []
-    for email_value, g_value in email_updates:
-        template_sheet["G1"] = g_value
-        if g_value == "":
-          for row in range(1, template_sheet.max_row + 1):
-            template_sheet[f"T{row}"] = ""  # Sets every cell in column T to an empty string
-
-
-        for row in template_sheet.iter_rows(min_row=2, min_col=13, max_col=13):
-            for cell in row:
-                
-                    cell.value = email_value
-
-        txt_file_path = os.path.join("downloads", f"SetnaiO_7RVW9_{g_value}.txt")
-        txt_files.append(txt_file_path)
-
-        with open(txt_file_path, "w", encoding="utf-8") as txt_file:
-            for row in template_sheet.iter_rows(values_only=True):
-                row_str = "\t".join(str(cell) if cell is not None else "" for cell in row)
-                txt_file.write(row_str + "\n")
-
     # Create a special text file for NS and NE conditions
     new_workbook = openpyxl.Workbook()
     new_sheet = new_workbook.active
@@ -184,6 +164,28 @@ def process_excel(input_file_path, output_file_path):
         for row in new_sheet.iter_rows(values_only=True):
             row_str = "\t".join(str(cell) if cell is not None else "" for cell in row)
             txt_file.write(row_str + "\n")
+     ##special file end       
+    for email_value, g_value in email_updates:
+        template_sheet["G1"] = g_value
+        if g_value == "":
+          for row in range(1, template_sheet.max_row + 1):
+            template_sheet[f"T{row}"] = ""  # Sets every cell in column T to an empty string
+
+
+        for row in template_sheet.iter_rows(min_row=2, min_col=13, max_col=13):
+            for cell in row:
+                
+                    cell.value = email_value
+
+        txt_file_path = os.path.join("downloads", f"SetnaiO_7RVW9_{g_value}.txt")
+        txt_files.append(txt_file_path)
+
+        with open(txt_file_path, "w", encoding="utf-8") as txt_file:
+            for row in template_sheet.iter_rows(values_only=True):
+                row_str = "\t".join(str(cell) if cell is not None else "" for cell in row)
+                txt_file.write(row_str + "\n")
+
+    
 
     new_workbook.save(output_file_path)
 
