@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bulk Text Files Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Additional custom CSS files if any -->
+    <style>
+        /* Add any custom styles here */
+        .container {
+            max-width: 4000px;
+            
+             /* Adjust the width as per your requirement */
+        }
+        .custom-heading {
+            color: yellow;
+            background-color:darkgreen;
+            padding: 10px; /* Add some padding to make it look better */
+            font-family: Arial, sans-serif;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        /* Add styles for the container */
+        .custom-container {
+            background-color: #f0f0f0; /* Set a light gray background for the container */
+            padding: 20px; /* Add some padding to create space around the content */
+            border-radius: 10px; /* Add rounded corners to the container */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container custom-container">
+        <h1 class="text-center custom-heading">Welcome Cameron Golman</h1>
+    </div>
+    
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6 border border-3 p-4">
+                
+                
+                <h3 class="text-center">Please upload bulk csv file</h3>
+                <form method="post" enctype="multipart/form-data" class="text-center">
+                    <label class="btn btn-primary mb-2">
+                        Choose File
+                        <input type="file" name="file" style="display: none;" required onchange="updateFileNameLabel(this)">
+                    </label>
+                    <br>
+                    <input type="submit" value="Process" class="btn btn-success">
+                </form>
+                <p id="file-name-label" class="text-center"></p>
+                {% if message %}
+                    <p class="text-center">{{ message }}</p>
+                    {% if download_file %}
+                        <div class="d-flex flex-column align-items-center">
+                            {% for filename in download_file %}
+                                <a href="{{ url_for('download_file', filename=filename) }}" download="{{ filename }}" class="btn btn-info mt-2">Download {{ filename }}</a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-center">No files available for download.</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateFileNameLabel(input) {
+            const fileNameLabel = document.getElementById("file-name-label");
+            if (input.files.length > 0) {
+                fileNameLabel.textContent = "Selected file: " + input.files[0].name;
+            } else {
+                fileNameLabel.textContent = "";
+            }
+        }
+    </script>
+</body>
+</html>
