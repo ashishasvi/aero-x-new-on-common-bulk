@@ -157,7 +157,7 @@ def process_excel(input_file_path, output_file_path):
             for cell in row:
                 
                     cell.value = "Scott.Loza@setnaio.com"
-    final_txt_file = os.path.join("downloads", "SetnaiO_7RVW9_29664.txt")
+    final_txt_file = os.path.join("", "SetnaiO_7RVW9_29664.txt")
     txt_files.append(final_txt_file)
 
     with open(final_txt_file, "w", encoding="utf-8") as txt_file:
@@ -177,7 +177,7 @@ def process_excel(input_file_path, output_file_path):
                 
                     cell.value = email_value
 
-        txt_file_path = os.path.join("downloads", f"SetnaiO_7RVW9_{g_value}.txt")
+        txt_file_path = os.path.join("", f"SetnaiO_7RVW9_{g_value}.txt")
         txt_files.append(txt_file_path)
 
         with open(txt_file_path, "w", encoding="utf-8") as txt_file:
